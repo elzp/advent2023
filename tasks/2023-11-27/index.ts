@@ -9,14 +9,32 @@ w sortowaniu listów? Czas ucieka!`
 
 
 export class ChristmasQueue <T> {
-  queue: Array<T>= [];
-    
+  queue: Array<any> = [];
+    // from max to min order
   enqueue(gift: T, orderNumber: number) {
+    const giftObject = {gift, orderNumber};
+    if(this.isEmpty() === true) {
+      this.queue.push(giftObject);
+    } else {
+      let index = 0;
+      if(orderNumber>this.queue[index].orderNumber) {
+        this.queue.unshift(giftObject);
+      } else {
+        while(orderNumber<=this.queue[index].orderNumber && index < this.queue.length - 1) {
+          index++;
+        }
+        this.queue.splice(index, 0, giftObject);
+      }
 
+    }
   }
   dequeue() {
     if(this.isEmpty() === true) {
       throw new Error('There are no letters in the queue!');
+    } else {
+      const show = this.queue[0].gift;
+      this.queue.shift();
+      return show;
     }
   }
   isEmpty() {
