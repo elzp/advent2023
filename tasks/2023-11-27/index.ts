@@ -4,9 +4,22 @@ nie są odpowiednio sortowane. Listy powinny być uporządkowane według prioryt
 jest wyrażony liczbą - im wyższa liczba, tym wyższy priorytet. Mikołaj potrzebuje systemu, 
 który pomoże mu szybko i efektywnie organizować listy, aby żadne życzenie nie zostało pominięte. 
 Renifery są ekspertami od logistyki, a nie od struktur danych, więc Mikołaj zwraca się o pomoc do 
-rogramistów. Czy jesteś w stanie stworzyć dla niego odpowiednią strukturę danych, która pomoże mu 
+programistów. Czy jesteś w stanie stworzyć dla niego odpowiednią strukturę danych, która pomoże mu 
 w sortowaniu listów? Czas ucieka!`
 
-export class ChristmasQueue {
-  
+
+export class ChristmasQueue <T> {
+  queue: Array<T>= [];
+    
+  enqueue(gift: T, orderNumber: number) {
+
+  }
+  dequeue() {
+    if(this.isEmpty() === true) {
+      throw new Error('There are no letters in the queue!');
+    }
+  }
+  isEmpty() {
+    return this.queue.length === 0;
+  }
 }
