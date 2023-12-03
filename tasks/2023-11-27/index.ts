@@ -6,3 +6,7 @@ który pomoże mu szybko i efektywnie organizować listy, aby żadne życzenie n
 Renifery są ekspertami od logistyki, a nie od struktur danych, więc Mikołaj zwraca się o pomoc do 
 rogramistów. Czy jesteś w stanie stworzyć dla niego odpowiednią strukturę danych, która pomoże mu 
 w sortowaniu listów? Czas ucieka!`
+
+export class ChristmasQueue {
+  
+}
