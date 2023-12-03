@@ -15,7 +15,12 @@ export class GiftRegistry {
       }
     }
   } 
-  removeGift(childId: number, present: string) {}
+  removeGift(childId: number, present: string) {
+    if(this.childrenIDs.indexOf(childId) !== -1) {
+      const id = this.presents[childId - 1].indexOf(present);
+      this.presents[childId - 1].splice(id, 1);
+    }
+  }
   getGiftsForChild(childId: number) {
     return this.presents[childId - 1];
   }
