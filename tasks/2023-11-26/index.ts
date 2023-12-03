@@ -18,7 +18,11 @@ export class GiftRegistry {
   removeGift(childId: number, present: string) {
     if(this.childrenIDs.indexOf(childId) !== -1) {
       const id = this.presents[childId - 1].indexOf(present);
-      this.presents[childId - 1].splice(id, 1);
+      if(id === -1){
+        throw new Error('Gift not found');
+      } else {
+        this.presents[childId - 1].splice(id, 1);
+      }
     }
   }
   getGiftsForChild(childId: number) {
