@@ -20,12 +20,11 @@ export class ChristmasQueue <T> {
       if(orderNumber>this.queue[index].orderNumber) {
         this.queue.unshift(giftObject);
       } else {
-        while(orderNumber<=this.queue[index].orderNumber && index < this.queue.length - 1) {
+        while(index < this.queue.length && orderNumber<=this.queue[index].orderNumber) {
           index++;
-        }
+         }
         this.queue.splice(index, 0, giftObject);
       }
-
     }
   }
   dequeue() {
