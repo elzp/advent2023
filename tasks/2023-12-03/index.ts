@@ -31,6 +31,10 @@ export function znajdzWorek(lokalizacje: Lokalizacja[], mapa: MapaCzasoprzestrze
         return mapa(x, y, z, czas);
     })
     const max = Math.max(...mappedValues);
-    const indexOfMax = mappedValues.indexOf(max)
-    return lokalizacje[indexOfMax];
+    if(Number.isNaN(max) || typeof max !== 'number'){
+        return null;
+    } else {
+        const indexOfMax = mappedValues.indexOf(max)
+        return lokalizacje[indexOfMax];
+    }
 }
