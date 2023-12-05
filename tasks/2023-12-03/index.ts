@@ -22,7 +22,10 @@ export interface MapaCzasoprzestrzenna {
 };
 
 export function znajdzWorek(lokalizacje: Lokalizacja[], mapa: MapaCzasoprzestrzenna): Lokalizacja | null {
-
+    if(lokalizacje.length === 0){
+        return null;
+    }
+    
     const mappedValues = lokalizacje.map((it)=> {
         const { x, y, z, czas }: Lokalizacja = it;
         return mapa(x, y, z, czas);
