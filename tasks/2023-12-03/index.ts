@@ -11,12 +11,15 @@ matematycznie (np. NaN, Infinity).`
 
 
 export interface Lokalizacja {
-
-}
+    x: number,
+    y: number,
+    z: number,
+    czas: number
+};
 
 export interface MapaCzasoprzestrzenna {
-
-}
+(x: number, y: number, z: number, czas: number): number;
+};
 
 export function znajdzWorek(lokalizacje: Lokalizacja[], mapa: MapaCzasoprzestrzenna): Lokalizacja | null {
     return null;
