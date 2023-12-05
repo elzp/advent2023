@@ -18,9 +18,16 @@ export interface Lokalizacja {
 };
 
 export interface MapaCzasoprzestrzenna {
-(x: number, y: number, z: number, czas: number): number;
+    (x: number, y: number, z: number, czas: number): number;
 };
 
 export function znajdzWorek(lokalizacje: Lokalizacja[], mapa: MapaCzasoprzestrzenna): Lokalizacja | null {
-    return null;
+
+    const mappedValues = lokalizacje.map((it)=> {
+        const { x, y, z, czas }: Lokalizacja = it;
+        return mapa(x, y, z, czas);
+    })
+    const max = Math.max(...mappedValues);
+    const indexOfMax = mappedValues.indexOf(max)
+    return lokalizacje[indexOfMax];
 }
