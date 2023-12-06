@@ -11,7 +11,7 @@ interface fn { (x: any): any };
 
 
 export function memoize(func: fn): any {
-
+    if(typeof func !== 'function') {throw Error('Function to be memoized must be a function.')}
     let cache = new Map<string | number, string | number>();
     return (n: string | number) => {
       if (cache.has(n)) {
