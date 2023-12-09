@@ -12,11 +12,19 @@ export class ChristmasEmitter {
     events = new Map<string, Array<fn>>();
 
     on(eventName: string, callback: fn){
+        const callbacks = this.events.get(eventName);
+        if(callbacks === undefined){
         this.events.set(eventName, [callback]);
+        } else {
+            const allCallbacks = [callback, ...callbacks];
+            this.events.set(eventName, allCallbacks);
+        }
     }
     off(eventName: string, callback: fn){}
     emit(eventName: string){
         const callbacks = this.events.get(eventName);
+        if(callbacks !== undefined){
         callbacks?.forEach(it=>(it)());
+        }
     }
 }
