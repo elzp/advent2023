@@ -39,4 +39,18 @@ describe('ChristmasEmitter', () => {
 
     expect(mockCallback).not.toHaveBeenCalled();
   });
+  it('should call remaining callbacks after removing', () => {
+    const emitter = new ChristmasEmitter();
+    const mockCallback = jest.fn();
+    const mockCallback2 = jest.fn();
+
+    emitter.on('letter', mockCallback);
+    emitter.on('letter', mockCallback2);
+    emitter.off('letter', mockCallback);
+    emitter.emit('letter');
+
+    expect(mockCallback).not.toHaveBeenCalled();
+    expect(mockCallback2).toHaveBeenCalled();
+
+  });
 });
