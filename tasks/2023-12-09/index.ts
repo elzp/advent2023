@@ -6,9 +6,17 @@ w liście prezentów i priorytetach dostaw. W związku z tym, Mikołaj musi szyb
 na naprawę systemu zdarzeń, aby wszystko wróciło do normy i prezenty zostały dostarczone na czas.
 Programiści będą musieli napisać nową implementację mechanizmu emitującego zdarzenia aby system do
 obsługi prezentów zaczął działać poprawnie.`
+interface fn { (): any };
 
 export class ChristmasEmitter {
-    on(){}
-    off(){}
-    emit(){}
+    events = new Map<string, Array<fn>>();
+
+    on(eventName: string, callback: fn){
+        this.events.set(eventName, [callback]);
+    }
+    off(eventName: string, callback: fn){}
+    emit(eventName: string){
+        const callbacks = this.events.get(eventName);
+        callbacks?.forEach(it=>(it)());
+    }
 }
