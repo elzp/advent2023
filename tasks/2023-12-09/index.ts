@@ -20,11 +20,23 @@ export class ChristmasEmitter {
             this.events.set(eventName, allCallbacks);
         }
     }
-    off(eventName: string, callback: fn){}
+    off(eventName: string, callback: fn){
+        const callbacks = this.events.get(eventName);
+        if(callbacks === undefined){
+            throw Error('Event not exist.');
+        } else {
+            const remainingCalls = callbacks.filter(it=>it !== callback);
+            if(callbacks.length === 0){
+                this.events.delete(eventName);
+            } else {
+                this.events.set(eventName, remainingCalls);
+            }
+        }
+    }
     emit(eventName: string){
         const callbacks = this.events.get(eventName);
         if(callbacks !== undefined){
-        callbacks?.forEach(it=>(it)());
+        callbacks.forEach(it=>(it)());
         }
     }
 }
