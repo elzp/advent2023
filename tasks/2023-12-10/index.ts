@@ -38,5 +38,8 @@ export class OrderController {
 export class Machine {
   states: Array<string | null> = [];
   state: string | null = '';
-  performAudit(){};
+  performAudit(){
+    const auditResults: string[] = this.states.map((item:string | null, index: number)=> `Order #${index + 1} - ${item}`);
+    return auditResults;
+  }; 
 }
