@@ -13,9 +13,13 @@ export class OrderController {
         this.machines.push(machine);
     };
     setState(state: string){
-        this.machines.forEach((it: Machine)=>{
-            if(it.state !== null){it.state = state};
-        });
+        if(this.machines.length !== 0){
+            this.machines.forEach((it: Machine)=>{
+                if(it.state !== null){it.state = state};
+            });
+        } else {
+            throw Error('Invalid state provided');
+        }
     };
     unregisterMachine(machine: Machine){
         this.machines.forEach((it: Machine)=>{
