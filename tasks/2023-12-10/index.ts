@@ -15,7 +15,11 @@ export class OrderController {
     setState(state: string){
         if(this.machines.length !== 0){
             this.machines.forEach((it: Machine)=>{
-                if(it.state !== null){it.state = state};
+                const lastState = it.states[it.states.length - 1];
+                if(lastState !== null || lastState === ''){
+                    it.state = state;
+                    it.states.push(it.state);
+                };
             });
         } else {
             throw Error('Invalid state provided');
@@ -23,12 +27,16 @@ export class OrderController {
     };
     unregisterMachine(machine: Machine){
         this.machines.forEach((it: Machine)=>{
-            if(it === machine) {it.state = null};
+            if(it === machine) {
+                it.state = null;
+                it.states.push(it.state);
+            };
         });
     };
 }
 
 export class Machine {
+  states: Array<string | null> = [];
   state: string | null = '';
   performAudit(){};
 }
