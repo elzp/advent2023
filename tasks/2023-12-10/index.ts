@@ -13,12 +13,18 @@ export class OrderController {
         this.machines.push(machine);
     };
     setState(state: string){
-        this.machines.forEach((it: Machine)=>{it.state = state});
+        this.machines.forEach((it: Machine)=>{
+            if(it.state !== null){it.state = state};
+        });
     };
-    unregisterMachine(machine: Machine){};
+    unregisterMachine(machine: Machine){
+        this.machines.forEach((it: Machine)=>{
+            if(it === machine) {it.state = null};
+        });
+    };
 }
 
 export class Machine {
-  state: string = '';
+  state: string | null = '';
   performAudit(){};
 }
