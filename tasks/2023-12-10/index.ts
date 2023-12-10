@@ -8,9 +8,17 @@ przekazywać im informacje o tym, jakie zabawki mają produkować. Tylko jak to 
 nie są ze sobą połączone?`
 
 export class OrderController {
-  
+    machines: Array<Machine> = [];
+    registerMachine(machine: Machine){
+        this.machines.push(machine);
+    };
+    setState(state: string){
+        this.machines.forEach((it: Machine)=>{it.state = state});
+    };
+    unregisterMachine(machine: Machine){};
 }
 
 export class Machine {
-  
+  state: string = '';
+  performAudit(){};
 }
