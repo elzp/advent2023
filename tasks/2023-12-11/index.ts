@@ -10,5 +10,18 @@ prezentów obsługuje teraz konta rodzinne, dzięki czemu zarówno rodzice jak i
 type Letter = { [key: string]: number };
 
 export function createTrackedLetter(letter: Letter, func: Function): Letter {
-  return {} as Letter;
+    
+const handler = {
+  set: (target: Letter, prop:string, value: number) => {
+      target[prop] = value
+      func(prop, value);
+    return true
+  }
 }
+
+const object = new Proxy(letter, handler)
+
+  return object as Letter;
+}
+
+// credit to: https://benborgers.com/posts/js-object-changes
