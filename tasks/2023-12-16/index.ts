@@ -43,5 +43,9 @@ export class LengthStrategy implements StrategyInterface {
 }
 
 export class CountryStrategy implements StrategyInterface {
-    sortingFunction(a: Letter, b: Letter) {};
+    sortingFunction(a: Letter, b: Letter) {
+        
+        const labels = ["pl", "de", "us"];
+        return labels.indexOf(a.country) - labels.indexOf(b.country);
+    }
 }
