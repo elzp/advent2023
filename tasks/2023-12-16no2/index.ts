@@ -13,16 +13,16 @@ export interface Tool {
 
 
 export class Equipment {
-    init: Function = ()=>{};
-    update: Function = ()=>{};
-    dispose: Function = ()=>{};
+    init: Array<Function> = [];
+    update: Array<Function> = [];
+    dispose: Array<Function> = [];
 
     registerTools(tool: Tool){
-        this.init = tool.init;
-        this.update = tool.update;
-        this.dispose = tool.dispose;
+        this.init.push(tool.init);
+        this.update.push(tool.update);
+        this.dispose.push(tool.dispose);
     };
-    initializeTools(){this.init();};
-    updateTools(){ this.update()};
-    disposeTools(){this.dispose()};
+    initializeTools(){this.init.forEach((it)=>{it();});};
+    updateTools(){ this.update.forEach((it)=>{it();});};
+    disposeTools(){this.dispose.forEach((it)=>{it();});};
 }
