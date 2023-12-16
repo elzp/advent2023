@@ -13,8 +13,16 @@ export interface Tool {
 
 
 export class Equipment {
-    registerTools(tool: Tool){};
-    initializeTools(){};
-    updateTools(){};
-    disposeTools(){};
+    init: Function = ()=>{};
+    update: Function = ()=>{};
+    dispose: Function = ()=>{};
+
+    registerTools(tool: Tool){
+        this.init = tool.init;
+        this.update = tool.update;
+        this.dispose = tool.dispose;
+    };
+    initializeTools(){this.init();};
+    updateTools(){ this.update()};
+    disposeTools(){this.dispose()};
 }
