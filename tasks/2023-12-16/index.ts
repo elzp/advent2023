@@ -10,21 +10,38 @@ export interface Letter {
     country: 'pl' | 'de' | 'us';
     priority: 'high' | 'medium' | 'low';
 }
-  
-export class LetterSorter {
-    sortLetters(letters: Array<Letter>): [] {
-      return [];
+
+interface StrategyInterface {
+    sortingFunction: Function;
+}
+
+export class LetterSorter  {
+    sortingFunction: Function = (a: Letter, b: Letter) => { return 1;};
+    constructor(SortingStrategy: StrategyInterface){
+        this.sortingFunction = SortingStrategy.sortingFunction;
+    }
+    sortLetters(letters: Array<Letter>): Array<Letter> {
+        const result = letters.sort((a: Letter, b: Letter)=>this.sortingFunction(a, b));
+      return result;
     }
 }
 
-export class PriorityStrategy {
+export class PriorityStrategy implements StrategyInterface {
     
+    sortingFunction(a: Letter, b: Letter) {
+        const labels = ["high", "medium", "low"];
+        return labels.indexOf(a.priority) - labels.indexOf(b.priority);
+    }
 }
 
-export class LengthStrategy {
-    
+export class LengthStrategy implements StrategyInterface {
+    sortingFunction(a: Letter, b: Letter) {
+        const contentA: number = a.content.split("").length;
+        const contentB: number = a.content.split("").length;
+        return contentA - contentB;
+    }
 }
 
-export class CountryStrategy {
-    
+export class CountryStrategy implements StrategyInterface {
+    sortingFunction(a: Letter, b: Letter) {};
 }
