@@ -5,7 +5,16 @@ do dzieci. Santa postanowił rozwiązać problem wykrywania cykli na swojej drod
 trasę i upewnić się, że każde miasto odwiedzany jest tylko raz. Pomóż Świętemu Mikołajowi w napisaniu
 rozszerzenia do systemu nawigacji, które wykryje cykle w jego ścieżkach i zaproponuje trasę bez zbędnych powtórzeń.`
 
+
+function isGraphCompleted(graph: Record<string, string[]>): boolean {
+	const arrOfKeys = Object.keys(graph);
+	const destinationsInAllKeys = Object.values(graph). reduce((prev, current)=>{return [...prev, ...current]},[]).concat(arrOfKeys);
+	
+	return destinationsInAllKeys.every((key) => arrOfKeys.includes(key));
+}
+
 function lookForCycle(firstDestination: string, graph: Record<string, string[]>, nextDest: string): string[]{
+	if(!isGraphCompleted(graph)){ throw Error('Invalid graph: missing nodes')}
 	let cycle: string[]  = [];
 
 	cycle.push(firstDestination);
