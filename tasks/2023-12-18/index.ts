@@ -11,6 +11,14 @@ export interface WeightedGraph {
     [key: string]: { [key: string]: number };
   }
   
-  export function findShortestPath(graph: WeightedGraph, startNode: string, endNode: string): string[] | null {
-    return []
-  }
+export function findShortestPath(graph: WeightedGraph, startNode: string, endNode: string): string[] | null {
+	const isStartInGraph = Object.keys(graph).includes(startNode) === undefined;
+	const isEndInGraph = Object.values(graph).reduce((prev: string[] | [], current: { [key: string]: number }) => { 
+			return [...prev, ...Object.keys(current)] 
+		}, [])
+		.includes(endNode);
+	if (!(isStartInGraph || isEndInGraph)) {
+		throw Error("'Invalid or non-existent route'")
+	}
+ 	return null;
+}
