@@ -12,6 +12,13 @@ export async function conductInterviews(
     interview: (subject: string) => Promise<string>,
     timeConstraint: number
   ): Promise<string[]> {
-    throw new Error('Not implemented');
+    const result: string[] = [];
+    subjects.forEach((subject: string)=>{
+        interview(subject)
+            .then(()=>{result.push('Discussed: ' + subject)})
+            .catch((rejected)=>{})
+    }
+        )
+    return result;
   }
   
