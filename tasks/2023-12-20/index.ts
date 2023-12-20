@@ -11,14 +11,13 @@ export async function conductInterviews(
     subjects: string[],
     interview: (subject: string) => Promise<string>,
     timeConstraint: number
-  ): Promise<string[]> {
+): Promise<string[]> {
     const result: string[] = [];
     subjects.forEach((subject: string)=>{
-        interview(subject)
-            .then(()=>{result.push('Discussed: ' + subject)})
-            .catch((rejected)=>{})
-    }
-        )
+            interview(subject)
+                    .then(()=>{result.push('Discussed: ' + subject)},
+                    (rejected)=>{result.push('Error: ' + rejected.message)})
+    })
     return result;
-  }
+    }
   
