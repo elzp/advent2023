@@ -7,17 +7,46 @@ zdecydował się na przeprowadzenie wywiadów o z góry ustalonych ramach czasow
 każdy dziennikarz trzyma się ustalonych zasad. Mikołaj potrzebuje systemu, który pozwoli mu anulować
 przeciągające się rozmowy.`
 
+import { performance } from 'perf_hooks'
+interface TimedPromiseSettledResult {
+		settledPromises: Promise<PromiseSettledResult<string>[]>,
+		times: Record<number, number>,
+	}
+
+
+function allSettledTimed(promises: Array<Promise<string>>): TimedPromiseSettledResult {
+	//credit: https://stackoverflow.com/a/76453599
+	const start = performance.now();
+		let times: Record<number, number> = {};
+	let promise =  Promise.allSettled(promises.map((p: Promise<string>, index: number) => {
+		return p.finally(async () => {
+			const end = await performance.now();
+			times[index] = await end - start;
+		});
+	}))
+		return {settledPromises: promise, times: times}
+}
 export async function conductInterviews(
-    subjects: string[],
-    interview: (subject: string) => Promise<string>,
-    timeConstraint: number
+	subjects: string[],
+	interview: (subject: string) => Promise<string>,
+	timeConstraint: number
 ): Promise<string[]> {
-    const result: string[] = [];
-    subjects.forEach((subject: string)=>{
-            interview(subject)
-                    .then(()=>{result.push('Discussed: ' + subject)},
-                    (rejected)=>{result.push('Error: ' + rejected.message)})
+	let result: string[] = []
+	const promises = subjects.map(subject => interview(subject));
+	const {settledPromises, times } = allSettledTimed(promises);
+
+    await settledPromises.then(async (values) => {
+        const newValues = values.map((it, index) => {
+            if (it.status === 'fulfilled') {
+                if(times[index] > timeConstraint){
+                    return 'Error: Timeout';
+                } else {
+                    return it.value;
+                }
+            }
+            else { return 'Error: ' + it.reason.message; }
+        })
+        result.push(...newValues);
     })
-    return result;
-    }
-  
+	return result;
+}
