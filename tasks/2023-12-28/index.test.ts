@@ -22,3 +22,10 @@ test('placeholders are ignored if not present in values', () => {
   const result = decodeMessage(template, values);
   expect(result).toBe('I started my journey at !');
 });
+
+test('not present placeholders are ignored while other values are replaced', () => {
+    const template = 'Dear {{ name }}, your shipment ({{ gift }}) has already visited two cities in {{ loc }}!';
+    const values = { name: 'b64:UGF1bGE=', loc: 'uri:Netherlands%3A%20Amsterdam%20%26%20Rotterdam' };
+    const result = decodeMessage(template, values);
+    expect(result).toBe('Dear Paula, your shipment () has already visited two cities in Netherlands: Amsterdam & Rotterdam!');
+  });
