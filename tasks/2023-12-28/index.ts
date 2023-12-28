@@ -30,8 +30,13 @@ console.log(code, text)
     }
 }
 export function decodeMessage(template: string, values: Record<string, string>): string {
+	let decodedValues = Object.values(values).map(it => decodeValue(it));
+	let result = Object.keys(values).reduce((accumulator, el, currentIndex) => {
+		let value = "{{ " + el + " }}"
+		let regExpr = new RegExp(value, "ig");
+		let changedTemplate = accumulator.replace(regExpr, decodedValues[currentIndex])
+		return changedTemplate;
+	}, template)
 
-    let values1 = Object.values(values).map(it=>decodeValue(it)).join('');
-
-    return values1;
+	return result;
 }
