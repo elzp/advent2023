@@ -10,7 +10,6 @@ które dodatkowo wyglądają na zaszyfrowane. Pomóż Elfom odczytać wiadomośc
 function decodeValue(value: string) {
     const code = value.split(':')[0];
     const text = value.split(':')[1]; 
-console.log(code, text)
 
     switch(code){
             case 'c13':
@@ -36,13 +35,16 @@ export function decodeMessage(template: string, values: Record<string, string>):
     if(Object.keys(values).length === 0) {
         result = template.replace(regExpr, '');
     } else {
-	let decodedValues = Object.values(values).map(it => decodeValue(it));
-	result = Object.keys(values).reduce((accumulator, el, currentIndex) => {
-		let value = "{{ " + el + " }}"
-		let regExpr = new RegExp(value, "ig");
-		let changedTemplate = accumulator.replace(regExpr, decodedValues[currentIndex])
-		return changedTemplate;
-	}, template)
+    let decodedValues = Object.values(values).map(it => decodeValue(it));
+    result = Object.keys(values).reduce((accumulator, el, currentIndex) => {
+        let value = "{{ " + el + " }}"
+        let regExpr = new RegExp(value, "ig");
+        let changedTemplate = accumulator.replace(regExpr, decodedValues[currentIndex])
+        return changedTemplate;
+    }, template)
+    if (regExpr.test(result)){
+        result = result.replace(regExpr, '');
+    }
 }
-	return result;
+return result;
 }
