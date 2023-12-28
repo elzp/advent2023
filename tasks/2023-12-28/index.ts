@@ -7,6 +7,31 @@ docierać do Elfów w nietypowym formacie. Każda z nich składa się z dwóch f
 które dodatkowo wyglądają na zaszyfrowane. Pomóż Elfom odczytać wiadomości i przywróć
 świąteczny porządek.`
 
+function decodeValue(value: string) {
+    const code = value.split(':')[0];
+    const text = value.split(':')[1]; 
+console.log(code, text)
+
+    switch(code){
+            case 'c13':
+            return text.split('').map(char=>{
+                if (char.charCodeAt(0) + 13 > 122){
+                    return String.fromCharCode((char.charCodeAt(0) + 13) % 122 + 96);	
+                } else {
+                    return String.fromCharCode(char.charCodeAt(0)  + 13);
+                }
+            }).join('');
+        case 'b64':
+                return atob(text);
+        case 'uri':
+                return decodeURIComponent(text);
+        default:
+            return '';
+    }
+}
 export function decodeMessage(template: string, values: Record<string, string>): string {
-    return '';
+
+    let values1 = Object.values(values).map(it=>decodeValue(it)).join('');
+
+    return values1;
 }
