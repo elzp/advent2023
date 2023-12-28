@@ -30,13 +30,19 @@ console.log(code, text)
     }
 }
 export function decodeMessage(template: string, values: Record<string, string>): string {
+    let result = template;
+    let value = "\\{\\{\\s[A-Za-z]+\\s\\}\\}";
+    let regExpr = new RegExp(value, "ig");
+    if(Object.keys(values).length === 0) {
+        result = template.replace(regExpr, '');
+    } else {
 	let decodedValues = Object.values(values).map(it => decodeValue(it));
-	let result = Object.keys(values).reduce((accumulator, el, currentIndex) => {
+	result = Object.keys(values).reduce((accumulator, el, currentIndex) => {
 		let value = "{{ " + el + " }}"
 		let regExpr = new RegExp(value, "ig");
 		let changedTemplate = accumulator.replace(regExpr, decodedValues[currentIndex])
 		return changedTemplate;
 	}, template)
-
+}
 	return result;
 }
