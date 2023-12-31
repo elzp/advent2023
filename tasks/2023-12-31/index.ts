@@ -13,14 +13,28 @@ export type Gift = {
   };
   
   export function calculateMaxGiftValue(gifts: Gift[], maxWeight: number, maxVolume: number): number {
-    if(Object.keys(gifts).length === 0) {
+    const lengthOfGifts = Object.keys(gifts).length;
+    if(lengthOfGifts === 0) {
         return 0;
     }
-    const weightValues = Object.values(gifts).map(it=>it.weight);
-    const volumeValues = Object.values(gifts).map(it=>it.volume);
+    const sortedGifts = gifts.sort((a, b) => a.value - b.value);
+    const weightValues = Object.values(sortedGifts).map(it=>it.weight);
+    const volumeValues = Object.values(sortedGifts).map(it=>it.volume);
 
     if(weightValues.every(it => it > maxWeight) || volumeValues.every(it => it > maxVolume)) {
         return 0;
     }
-    return -1;
+    const values = Object.values(sortedGifts).map(it => it.value);
+    let i = 0;
+    let currentValue = 0;
+    let currentVolume = 0;
+    let currentWeight = 0;
+
+    while(i < lengthOfGifts - 1 && currentVolume <= maxVolume && currentWeight <= maxWeight) {
+        currentValue += values[i];
+        currentVolume += volumeValues[i];
+        currentWeight += weightValues[i];
+        i++;
+    }
+    return currentValue;
   }
