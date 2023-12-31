@@ -8,7 +8,13 @@ zbudowanie awaryjnego zestawu prezentów. Jak to zrobić, kiedy wszyscy działaj
 presją czasu a z magazynu zapasowego od dawna nie korzystano?`
 
 export function* storageQuery(range: number, gift: string, resolver: (n: number, gift: string) => boolean): Generator<number> {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');	
+    let index = 0;
+	const len = gift.split('').length;
+	console.log(len)
+	while (index + len <= range) {
+		yield index+=len;
+	}
 }
 
 export function storageResolver(n: number, gift: string): boolean {
