@@ -13,5 +13,9 @@ export type Gift = {
   };
   
   export function calculateMaxGiftValue(gifts: Gift[], maxWeight: number, maxVolume: number): number {
-    return 0;
+    if(Object.keys(gifts).length === 0) {
+        return 0;
+    }
+
+    return -1;
   }
