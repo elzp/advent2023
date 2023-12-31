@@ -16,6 +16,11 @@ export type Gift = {
     if(Object.keys(gifts).length === 0) {
         return 0;
     }
+    const weightValues = Object.values(gifts).map(it=>it.weight);
+    const volumeValues = Object.values(gifts).map(it=>it.volume);
 
+    if(weightValues.every(it => it > maxWeight) || volumeValues.every(it => it > maxVolume)) {
+        return 0;
+    }
     return -1;
   }
