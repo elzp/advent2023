@@ -13,7 +13,7 @@ type GalacticHistoryTracer<T> = {
     add: (el: T) => void;
     undo: () =>  T | null;
     redo: () =>  T | null;
-    current: () => T | null;
+    current: () => T | null | never;
 };
 
 export function createTracer<T>(): GalacticHistoryTracer<T> {
@@ -23,7 +23,7 @@ export function createTracer<T>(): GalacticHistoryTracer<T> {
       iterator: number = -1;
       add = (el: T) => {
         this.list.push(el);
-        this.iterator++;
+        this.iterator = this.list.length - 1;
       };
       undo = ()=> {
         this.iterator--;
@@ -36,9 +36,11 @@ export function createTracer<T>(): GalacticHistoryTracer<T> {
       current = () => {
         if(this.iterator >=0 && this.iterator <= this.list.length - 1) {
           return this.list[this.iterator];
-        } else {
+        } else if (this.iterator < 0){
           return null;
-        }
+        }  else {
+          throw Error('No more galaxies to explore');
+        } 
       };
   };
   const tracer: Tracer = new Tracer();
