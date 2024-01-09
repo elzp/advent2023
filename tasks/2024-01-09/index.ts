@@ -7,8 +7,34 @@ wysokie standardy bezpieczeństwa, elfy odpowiedzialne za info-sec zarekomendowa
 podróży Mikołaja, aby w razie potrzeby wyruszyć na misję poszukiwawczą. Czy jesteś w stanie utworzyć taki
 system bezpiecznej nawigacji?`
 
-type GalacticHistoryTracer<T> = {};
+type GalacticHistoryTracer<T> = {
+    readonly list: Array<T>;
+    iterator: number;
+    add: (el: T) => void;
+    undo: () =>  T | null;
+    redo: () =>  T | null;
+    current: () => T | null;
+};
 
 export function createTracer<T>(): GalacticHistoryTracer<T> {
-  return {};
+
+    class Tracer {
+      list: Array<T> = [];
+      iterator: number = -1;
+      add = (el: T) => {
+        this.list.push(el);
+        this.iterator++;
+      };
+      undo = ()=> null;
+      redo = ()=> null;
+      current = () => {
+        if(this.iterator >=0) {
+          return this.list[this.iterator];
+        } else {
+          return null;
+        }
+      };
+  };
+  const tracer: Tracer = new Tracer();
+  return tracer;
 }
