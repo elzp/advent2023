@@ -25,10 +25,16 @@ export function createTracer<T>(): GalacticHistoryTracer<T> {
         this.list.push(el);
         this.iterator++;
       };
-      undo = ()=> null;
-      redo = ()=> null;
+      undo = ()=> {
+        this.iterator--;
+        return this.current();
+      };
+      redo = ()=> {
+        this.iterator++;
+        return this.current();
+      };
       current = () => {
-        if(this.iterator >=0) {
+        if(this.iterator >=0 && this.iterator <= this.list.length - 1) {
           return this.list[this.iterator];
         } else {
           return null;
