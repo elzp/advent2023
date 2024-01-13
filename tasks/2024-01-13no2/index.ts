@@ -7,11 +7,12 @@ gwarantować, że w określonej jednostce czasu, tylko pewna liczba prób dostę
 a wszystkie nadmiarowe próby zostaną odrzucone lub odłożone do późniejszego czasu. Właśnie ty, jako
 doświadczony inżynier oprogramowania, zostałeś poproszony, byś zaprojektował i wdrożył niezawodny
 system limitowania ruchu, który zadba o równowagę obciążenia w systemie.`
-
+const { performance } = require('perf_hooks');
 export class RateLimiter {
   maxRequests: number = 0;
   intervalMs: number = 0;
   timesOfGivenAccess: number = 0;
+  timeOfLastAccess= 0
   constructor(maxRequests: number, intervalMs: number){
     this.maxRequests = maxRequests;
     this.intervalMs = intervalMs;
@@ -19,10 +20,15 @@ export class RateLimiter {
   }
   attemptAccess(){
     if(this.timesOfGivenAccess < this.maxRequests){
+      this.timeOfLastAccess = performance.now();
       this.timesOfGivenAccess++;
       return true;
     } else {
-      return false;
+      if(performance.now() - this.timeOfLastAccess > this.intervalMs){
+        return true
+      } else {
+        return false;
+      }
     }
   }
 
