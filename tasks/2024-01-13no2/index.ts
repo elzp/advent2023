@@ -9,5 +9,21 @@ doświadczony inżynier oprogramowania, zostałeś poproszony, byś zaprojektowa
 system limitowania ruchu, który zadba o równowagę obciążenia w systemie.`
 
 export class RateLimiter {
-  
+  maxRequests: number = 0;
+  intervalMs: number = 0;
+  timesOfGivenAccess: number = 0;
+  constructor(maxRequests: number, intervalMs: number){
+    this.maxRequests = maxRequests;
+    this.intervalMs = intervalMs;
+
+  }
+  attemptAccess(){
+    if(this.timesOfGivenAccess < this.maxRequests){
+      this.timesOfGivenAccess++;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
