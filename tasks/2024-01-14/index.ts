@@ -7,5 +7,19 @@ paginacji prezentów. System ten miałby umożliwić Mikołajowi przeglądanie p
 zamiast wszystkich na raz, co znacznie przyspieszyłoby proces wyboru prezentów do dostarczenia.`
 
 export function usePagination<T>(items: T[], itemsPerPage: number, pageNumber: number) {
-  
+  let totalPages = 0
+  let currentPageItems: T[] = [];
+
+  if(items.length === 0){
+    currentPageItems = [];
+  } else {
+    currentPageItems = items;
+  }
+
+
+  return {
+    currentPageItems,
+    totalPages,
+    totalItems: items.length,
+  }
 }
