@@ -13,10 +13,10 @@ export function usePagination<T>(items: T[], itemsPerPage: number, pageNumber: n
   if(pageNumber > totalPages || items.length === 0){
     currentPageItems = [];
   } else {
-    currentPageItems = items;
+    let startIdOfCurrentPage = (pageNumber - 1) * itemsPerPage;
+		let endIdOfCurrentPage = startIdOfCurrentPage + itemsPerPage > items.length ? items.length : startIdOfCurrentPage + itemsPerPage;
+		currentPageItems = items.slice(startIdOfCurrentPage, endIdOfCurrentPage);
   }
-
-
   return {
     currentPageItems,
     totalPages,
