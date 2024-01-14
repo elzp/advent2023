@@ -10,7 +10,7 @@ export function usePagination<T>(items: T[], itemsPerPage: number, pageNumber: n
   let totalPages = 0
   let currentPageItems: T[] = [];
 
-  if(items.length === 0){
+  if(pageNumber > totalPages || items.length === 0){
     currentPageItems = [];
   } else {
     currentPageItems = items;
