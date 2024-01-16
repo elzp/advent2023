@@ -13,7 +13,10 @@ export class GiftStream {
         this.presents = presents;
         this.modifiedPresents = presents;
     }
-    map(fn: Function){
+    map(fn: (value:string) => string){
+        if(this.presents.length !== 0) {
+            this.modifiedPresents = this.modifiedPresents.map(el => fn(el));
+        }
         return this
     }
     skip(givenNumber: number){
