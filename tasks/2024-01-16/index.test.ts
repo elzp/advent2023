@@ -5,7 +5,7 @@ import { GiftStream } from './index';
 test('should correctly map, skip and take values from an array', () => {
   const stream = new GiftStream(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']);
   const result = stream
-    .map((value) => value.toUpperCase())
+    .map((value: string) => value.toUpperCase())
     .skip(3)
     .take(2)
     .getGifts();
