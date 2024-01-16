@@ -17,14 +17,13 @@ export class GiftStream {
         return this
     }
     skip(givenNumber: number){
-        if(this.currentId + givenNumber <= this.presents.length) {
+        if(this.currentId + givenNumber <= this.modifiedPresents.length) {
             this.currentId=+ givenNumber
         }
-        this.modifiedPresents = this.modifiedPresents.slice(this.currentId)
         return this;
     }
     take(givenNumber: number){
-        this.modifiedPresents = this.modifiedPresents.slice(this.currentId, givenNumber)
+        this.modifiedPresents = this.modifiedPresents.slice(this.currentId, this.currentId+givenNumber)
         return this;
     }
     getGifts(){
