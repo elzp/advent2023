@@ -12,5 +12,15 @@ export class InjectionToken<T> {
 }
 
 export class FactoryInjector {
-  
+	instanceOfClass = {};
+
+	registerClass(newClass: any) {
+		this.instanceOfClass = new newClass;
+	}
+	get<T>(element: any) : any | never {
+		console.log(this.instanceOfClass instanceof element)
+		if (this.instanceOfClass instanceof element) {
+			return this.instanceOfClass;
+		}
+	}
 }
