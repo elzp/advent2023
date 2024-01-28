@@ -21,6 +21,8 @@ export class FactoryInjector {
 		console.log(this.instanceOfClass instanceof element)
 		if (this.instanceOfClass instanceof element) {
 			return this.instanceOfClass;
+		}  else {
+			throw Error();
 		}
 	}
 }
