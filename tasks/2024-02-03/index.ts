@@ -16,5 +16,8 @@ export interface TextProcessingPlugin {
 }
 
 export class TextProcessor {
-
+    use(){}
+    process(text: string){
+        return text;
+    }
 }
