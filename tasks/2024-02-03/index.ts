@@ -14,10 +14,34 @@ jakościowe.`
 export interface TextProcessingPlugin {
 
 }
-
+export class ReplaceCharsPlugin {
+    [key: string]: any;
+    constructor(options: any){
+        this.method = (a: string) => {
+			let newA = a;
+			let keys: string[] = Object.keys(options);
+			let values: string[] = Object.values(options);
+			keys.forEach((el, id) => {
+				let regexp = new RegExp(el, 'g');
+				newA = newA.replace(regexp, values[id])
+			})
+			return newA;
+		}
+    }
+}
 export class TextProcessor {
-    use(){}
+    methods: Function[] = [];
+
+    use(process: any): void{
+        this.methods.push(process.method)
+    }
     process(text: string){
-        return text;
+        let newText = text;
+        if(this.methods.length !== 0){
+            this.methods.forEach(el=>{
+                newText = el(newText)
+            })
+        }
+        return newText;
     }
 }
