@@ -14,6 +14,22 @@ jakościowe.`
 export interface TextProcessingPlugin {
 
 }
+export class RemoveWordsPlugin {
+    [key: string]: any;
+    constructor(options: any){
+        this.method = (a: string) => {
+			let newA = a;
+			options.forEach((el:string) => {
+				let regexp = new RegExp(el, 'g');
+				newA = newA.replace(regexp, '')
+			})
+            let regexp = new RegExp(`[ ]{2,}`,);
+            newA = newA.replace(regexp, ' ')
+			return newA;
+		}
+    }
+}
+
 export class ReplaceCharsPlugin {
     [key: string]: any;
     constructor(options: any){
