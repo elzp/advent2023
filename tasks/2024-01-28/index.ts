@@ -17,16 +17,24 @@ export class InjectionToken<T> {
 
 export class FactoryInjector {
 	instanceOfClass = {};
+	[key: string]: any;
 
 	registerClass(newClass: any) {
 		this.instanceOfClass = new newClass;
 	}
-	get<T>(element: any) : any | never {
-		console.log(this.instanceOfClass instanceof element)
-		if (this.instanceOfClass instanceof element) {
-			return this.instanceOfClass;
-		}  else {
-			throw Error();
+	get<T>(element: any): any | never {
+		if (Object.keys(element).length !== 0) {
+			return this[`${element.value}`]
+		} else {
+			if (this.instanceOfClass instanceof element) {
+				return this.instanceOfClass;
+			} else {
+				throw Error();
+			}
 		}
+	}
+	provideValue<T>(token: InjectionToken<T>, tokensValue: string) {
+		console.log('provideValue')
+		this[`${token.value}`] = tokensValue;
 	}
 }
