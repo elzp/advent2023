@@ -9,6 +9,10 @@ kontenera "dobrych praktyk i rekomendacji". Tylko w ten sposób można zapewnić
 będą spełniać wymagania jakościowe.`
 
 export class InjectionToken<T> {
+	[key: string]: any;
+	constructor(nameOfValue: T | string) {
+		this[`${nameOfValue}`] = '';
+	}
 }
 
 export class FactoryInjector {
