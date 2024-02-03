@@ -45,6 +45,17 @@ export class ReplaceCharsPlugin {
 		}
     }
 }
+export class MarkdownToHtmlPlugin {
+    [key: string]: any;
+    constructor(){
+        this.method = (a: string) => {
+			let newA = a;
+			newA = newA.replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>');
+			return newA;
+		}
+    }
+}
+
 export class TextProcessor {
     methods: Function[] = [];
 
