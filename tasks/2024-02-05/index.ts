@@ -19,6 +19,34 @@ export type JsonSchema = {
     return schemaDefinition;
   };
   
+  const checkNonStandardTypes = (el: any) => {
+	if (Array.isArray(el)) return 'array';
+	if (el === null) return null;
+	return 'object'
+}
+
   export const validate = (schema: JsonSchema, jsonObject: any): boolean => {
-    return true;
+    if (typeof jsonObject === schema.type) {
+		if (schema.required) {
+			let objectPropertiesNames = Object.keys(jsonObject)
+			let ifAllRequiredExists = schema.required.map(it => objectPropertiesNames.some(it2 => it === it2));
+			if (ifAllRequiredExists.every(it => it === true)) {
+				if (schema.properties) {
+					let types = schema.properties;
+					let typesOfPropertiesAreValid = objectPropertiesNames
+						.map((it: Object) => {
+							let realPropertyType = typeof jsonObject[`${it}`] === 'object' ? checkNonStandardTypes(jsonObject[`${it}`]) : typeof jsonObject[`${it}`];
+							let requiredProperties: (string | null)[] = [types[`${it}`].type]
+							if (types[`${it}`].nullable === true) {
+								requiredProperties = [...requiredProperties, null];
+							}
+							return requiredProperties.some(it => it === realPropertyType);
+						})
+					if (typesOfPropertiesAreValid.every(it => it === true)) {
+						return true
+					} else { return false }
+				} { return false }
+			} else { return false }
+		} else { return false }
+	} else { return false; }
   };
