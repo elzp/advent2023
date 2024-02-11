@@ -8,9 +8,21 @@ stylów, które będą odzwierciedlone w szablonie. Mikołaj zwrócił się wię
 podjął to wyzwanie i stworzył podstawy nowoczesnego front-endowego frameworka, który pomoże w 
 zarządzaniu listą prezentów na rok 2024!`
 
+class EmptyObjectLiteralClass {
+    [key: string]: any;
+}
 abstract class Component {
-    state = {}
+    state: EmptyObjectLiteralClass = {}
+    style: EmptyObjectLiteralClass = {}
     template(){return ''}
+
+    constructor(state: Object = {}, style: Object = {}){
+        this.setState(state, style)
+    }
+    setState(state: Object, style: Object = {}){
+        this.state = state;
+        this.style = style;
+    }
 }
 
 function renderComponent(component: Component): string {

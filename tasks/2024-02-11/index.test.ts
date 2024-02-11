@@ -30,14 +30,14 @@ test('Component without state should render template correctly', () => {
   expect(output).toBe('<span>No state</span>');
 });
 
-// test('Component should apply styles if provided', () => {
-//   class StyledComponent extends Component {
-//     template() {
-//       return `<div style="${this.style}">${this.state.message}</div>`;
-//     }
-//   }
+test('Component should apply styles if provided', () => {
+  class StyledComponent extends Component {
+    template() {
+      return `<div style="${this.style}">${this.state.message}</div>`;
+    }
+  }
 
-//   const styledComponent = new StyledComponent({ message: 'Styled Message' }, 'color: red;');
-//   const output = renderComponent(styledComponent);
-//   expect(output).toBe('<div style="color: red;">Styled Message</div>');
-// });
+  const styledComponent = new StyledComponent({ message: 'Styled Message' }, 'color: red;');
+  const output = renderComponent(styledComponent);
+  expect(output).toBe('<div style="color: red;">Styled Message</div>');
+});
