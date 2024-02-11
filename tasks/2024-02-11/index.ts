@@ -9,11 +9,12 @@ podjął to wyzwanie i stworzył podstawy nowoczesnego front-endowego frameworka
 zarządzaniu listą prezentów na rok 2024!`
 
 abstract class Component {
-  
+    state = {}
+    template(){return ''}
 }
 
 function renderComponent(component: Component): string {
-  
+    return component.template();
 }
 
 export { Component, renderComponent };
